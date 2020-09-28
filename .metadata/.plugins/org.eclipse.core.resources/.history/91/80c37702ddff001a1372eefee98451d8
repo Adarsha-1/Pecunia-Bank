@@ -1,0 +1,5 @@
+package com.capgemini.pecunia.atmservice.exception;
+
+public class AtmServiceException {
+
+}

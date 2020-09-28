@@ -1,0 +1,9 @@
+package com.capgemini.pecunia.passbookservice.dao;
+
+import org.springframework.data.repository.CrudRepository;
+
+import com.capgemini.pecunia.passbookservice.dto.Account;
+
+public interface AccountRepository extends CrudRepository<Account,Long>{
+
+}

@@ -1,0 +1,32 @@
+package com.capgemini.pecunia.passbookservice.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import com.capgemini.pecunia.passbookservice.dto.CustomError;
+import com.capgemini.pecunia.passbookservice.dto.ErrorMsg;
+
+
+@RestControllerAdvice
+public class PassBookServiceExceptionAdvice {
+	
+	@ExceptionHandler(NoTransactionsException.class)
+	public ResponseEntity<ErrorMsg> mapException(NoTransactionsException ex)
+	{
+		ErrorMsg error=new ErrorMsg(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
+		return new ResponseEntity<ErrorMsg>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+	
+	@ExceptionHandler(AccountNotFoundException.class)
+	public ResponseEntity<ErrorMsg> mapAccountException(AccountNotFoundException ex)
+	{
+		ErrorMsg error=new ErrorMsg(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
+		return new ResponseEntity<ErrorMsg>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
+}

@@ -1,0 +1,46 @@
+package com.capgemini.pecunia.passbookservice.dto;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="ACCOUNT")
+public class Account {
+
+	@Id
+	private long accountNo;
+	private String accountName;
+	private double amount;
+	public Account() {}
+	public Account(long accountNo, String accountName, double amount) {
+		super();
+		this.accountNo = accountNo;
+		this.accountName = accountName;
+		this.amount = amount;
+	}
+	public long getAccountNo() {
+		return accountNo;
+	}
+	public void setAccountNo(long accountNo) {
+		this.accountNo = accountNo;
+	}
+	public String getAccountName() {
+		return accountName;
+	}
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+	public double getAmount() {
+		return amount;
+	}
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+	@Override
+	public String toString() {
+		return "Account [accountNo=" + accountNo + ", accountName=" + accountName + ", amount=" + amount + "]";
+	}
+	
+	
+}

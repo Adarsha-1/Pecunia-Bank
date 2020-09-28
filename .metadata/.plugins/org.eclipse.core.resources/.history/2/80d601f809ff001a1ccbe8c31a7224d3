@@ -1,0 +1,23 @@
+package com.capgemini.pecunia.atmservice.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+import com.capgemini.pecunia.atmservice.service.AtmServiceImpl;
+
+@RestController
+@RequestMapping("/atm")
+public class Controller {
+	
+	@Autowired
+	AtmServiceImpl atmService;
+	
+	@RequestMapping("/{number}")
+	public AtmRegistry blockAtm(@PathVariable("number") long number)
+	{
+		return atmService.blockAtmCard(number);
+	}
+}

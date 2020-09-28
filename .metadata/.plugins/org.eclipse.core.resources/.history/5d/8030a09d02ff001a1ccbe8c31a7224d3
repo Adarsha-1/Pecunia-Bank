@@ -1,0 +1,64 @@
+package com.capgemini.pecunia.atmservice.service;
+
+import javax.persistence.EntityManager;
+import javax.persistence.TypedQuery;
+import javax.transaction.Transactional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.pecunia.atmservice.dao.AtmRepositry;
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+
+@Service
+public class AtmServiceImpl implements AtmService {
+	
+	@Autowired
+	AtmRepositry atmRepositry;
+	
+	@Autowired
+	EntityManager entityManager;
+
+	@Override
+	public AtmRegistry blockAtmCard(long atmNumber) {
+		// TODO Auto-generated method stub
+		/*AtmRegistry atm=atmRepositry.findByAtmNumber(atmNumber);
+		if(atm!=null)
+		{
+			atm.setStatus("BLOCK");
+			return atm;
+		}
+		else
+		{
+			return null;
+		}*/
+		System.out.println("Entered");
+		try
+		{
+			System.out.println("Entered");
+			AtmRegistry atm=atmRepositry.findByAtmNumber(atmNumber);
+			System.out.println(atm);
+			if(atm!=null)
+			{
+				atm.setStatus("BLOCK");
+				System.out.println("Entered"+atm);
+				return atm;
+			}
+			else
+			{
+				return null;
+			}
+		}
+		catch(Exception e)
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public AtmRegistry requestAtmCard(long accountNumber) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

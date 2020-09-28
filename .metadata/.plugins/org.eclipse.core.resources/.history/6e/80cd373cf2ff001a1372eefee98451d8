@@ -1,0 +1,50 @@
+package com.capgemini.pecunia.passbookservice.dto;
+
+import java.time.LocalDate;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
+public class PassBook {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private long passBookNo;
+	private long accountNumber;
+	private LocalDate updatedDate;
+	public PassBook() {}
+	public PassBook(long passBookNo, long accountNumber, LocalDate updatedDate) {
+		super();
+		this.passBookNo = passBookNo;
+		this.accountNumber = accountNumber;
+		this.updatedDate = updatedDate;
+	}
+	public long getPassBookNo() {
+		return passBookNo;
+	}
+	public void setPassBookNo(long passBookNo) {
+		this.passBookNo = passBookNo;
+	}
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public LocalDate getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(LocalDate updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	@Override
+	public String toString() {
+		return "PassBook [passBookNo=" + passBookNo + ", accountNumber=" + accountNumber + ", updatedDate="
+				+ updatedDate + "]";
+	}
+	
+	
+}

@@ -1,0 +1,11 @@
+package com.capgemini.pecunia.atmservice.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+
+@Repository
+public interface AtmRepositry extends JpaRepository<AtmRegistry,Long>{
+	AtmRegistry findByAtmNumber(long atmNumber);
+}

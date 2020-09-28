@@ -1,0 +1,5 @@
+package com.capgemini.pecunia.atmservice.dao;
+
+public class AtmRepositry {
+
+}

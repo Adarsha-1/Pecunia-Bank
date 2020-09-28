@@ -1,0 +1,38 @@
+package com.capgemini.pecunia.atmservice.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.capgemini.pecunia.atmservice.dao.AtmRepositry;
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+class AtmServiceImplTest {
+
+	@Autowired
+	private AtmServiceImpl atmService;
+	
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void atmCardBlocktest() {
+		AtmRegistry atmCard=new AtmRegistry();
+		atmCard.setAccountNumber(525263);
+		atmCard.setAtmNumber(123456);
+		atmCard.setStatus("BLOCK");
+		AtmRegistry find=atmService.blockAtmCard(123456);
+		assertEquals(find,atmCard);
+		
+	}
+
+}

@@ -1,0 +1,7 @@
+package com.capgemini.pecunia.atmservice.dto;
+
+public class CustomError {
+	
+	private int errorCode;
+	private String errorMessage;
+}

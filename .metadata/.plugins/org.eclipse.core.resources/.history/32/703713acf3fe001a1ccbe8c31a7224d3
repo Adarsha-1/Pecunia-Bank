@@ -1,0 +1,5 @@
+package com.capgemini.pecunia.atmservice.service;
+
+public interface AtmService {
+
+}

@@ -1,0 +1,43 @@
+package com.capgemini.pecunia.passbookservice.controller;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.capgemini.pecunia.passbookservice.dto.Transaction;
+import com.capgemini.pecunia.passbookservice.dto.Transcation;
+import com.capgemini.pecunia.passbookservice.service.PassBookServiceImpl;
+
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
+@RestController
+@RequestMapping("/pass")
+public class PassBookController {
+	
+	@Autowired
+	PassBookServiceImpl passBookService;
+	Logger log=LoggerFactory.getLogger(PassBookController.class);
+	
+	@ApiOperation(value="updating passbook")
+	@RequestMapping("/req/{number}")
+	public List<Transcation> updatePassBook(@ApiParam(value="account number is in long format")@PathVariable("number") long accountNumber)
+	{
+		log.info("updating passbook for the account number:"+accountNumber);
+		return passBookService.updatePassbook(accountNumber);
+	}	
+	
+	@ApiOperation(value="getting account summary")
+	@RequestMapping("/summ/{number}/{fromDate}/{toDate}")
+	public List<Transcation> accountSumm(@ApiParam(value="account number is in long format")@PathVariable("number") long accountNumber, @PathVariable("fromDate") String fromDate,@PathVariable("toDate") String toDate)
+	{
+		log.info("Getting transactions b/w "+LocalDate.parse(fromDate)+" to "+LocalDate.parse(toDate)+" for account number: "+accountNumber);
+		return passBookService.accountSummary(accountNumber, LocalDate.parse(fromDate), LocalDate.parse(toDate));
+	}
+}

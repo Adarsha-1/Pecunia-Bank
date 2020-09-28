@@ -1,0 +1,8 @@
+package com.capgemini.pecunia.atmservice.controller;
+
+public class Snippet {
+	public static void main(String[] args) {
+		520000000000
+	}
+}
+

@@ -1,0 +1,123 @@
+package com.capgemini.pecunia.passbookservice.service;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.capgemini.pecunia.passbookservice.dao.AccountRepository;
+import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
+import com.capgemini.pecunia.passbookservice.dao.TransactionRepository;
+import com.capgemini.pecunia.passbookservice.dto.Account;
+import com.capgemini.pecunia.passbookservice.dto.PassBook;
+import com.capgemini.pecunia.passbookservice.dto.Transaction;
+import com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException;
+import com.capgemini.pecunia.passbookservice.exception.NoTransactionsException;
+import com.capgemini.pecunia.passbookservice.exception.ToDateAfterCurrentDateException;
+import com.capgemini.pecunia.passbookservice.exception.ToDateException;
+
+@Service
+public class PassBookServiceImpl implements PassBookService{
+
+	@Autowired
+	PassBookRepository passBookrepo;
+	
+	@Autowired
+	TransactionRepository transRepo;
+	
+	@Autowired
+	AccountRepository accountRepo;
+	@Override
+	public List<Transaction> updatePassbook(long accountNumber) {
+		// TODO Auto-generated method stub
+		System.out.println("entered");
+		Account acc=accountRepo.findByAccountNo(accountNumber);
+		System.out.println("entered" +acc);
+		List<Transaction> updatedTransList=new ArrayList<Transaction>();
+		PassBook updatePassBook=new PassBook();
+		if(acc!=null)
+		{
+			System.out.println("entered inner loop");
+			List<Transaction> transactionList=transRepo.findByAccountNo(accountNumber);
+			System.out.println("entered transaction"+transactionList.size());
+			PassBook passbook=passBookrepo.findByAccountNumber(accountNumber);
+			System.out.println("entered pass"+passbook);
+			if(passbook!=null)
+			{
+				LocalDate updateddate=passbook.getUpdatedDate();
+				for(Transaction trans:transactionList)
+				{
+					if((trans.getTransactionDate()).isAfter(updateddate))
+					{
+						updatedTransList.add(trans);
+					}
+				}
+				updatePassBook=passbook;
+				updatePassBook.setUpdatedDate(LocalDate.now());
+				passBookrepo.save(updatePassBook);
+			}
+			else
+			{
+				for(Transaction trans:transactionList)
+				{
+					updatedTransList.add(trans);
+				}
+				updatePassBook.setAccountNumber(accountNumber);
+				updatePassBook.setUpdatedDate(LocalDate.now());
+				passBookrepo.save(updatePassBook);
+			}
+			
+		}
+		else
+		{
+			throw new AccountNotFoundException("Account with Number : "+accountNumber+" is not present");
+		}
+		if(updatedTransList.size()==0)
+		{
+			throw new NoTransactionsException("No recent transaction done after last updation on account number: "+accountNumber);
+		}
+		return updatedTransList;
+	}
+
+	@Override
+	public List<Transaction> accountSummary(long accountNumber, LocalDate fromDate, LocalDate toDate) {
+		// TODO Auto-generated method stub
+		Account acc=accountRepo.findByAccountNo(accountNumber);
+		List<Transaction> updatedTransList=new ArrayList<Transaction>();
+		if(acc!=null)
+		{
+			List<Transaction> transactionList=transRepo.findByAccountNo(accountNumber);
+			if(toDate.isBefore(fromDate))
+			{
+				throw new ToDateException("To Date i.e: "+toDate+" should be after from date ");
+			}
+			if(LocalDate.now().isBefore(toDate))
+			{
+				throw new ToDateAfterCurrentDateException("ToDate i.e: "+toDate+"should not be after current date");
+			}
+			for(Transaction trans:transactionList)
+			{
+				if((trans.getTransactionDate()).isAfter(fromDate) && trans.getTransactionDate().isBefore(toDate))
+				{
+					updatedTransList.add(trans);
+				}
+				if(trans.getTransactionDate().compareTo(fromDate) == 0 || trans.getTransactionDate().compareTo(toDate) == 0)
+				{
+					updatedTransList.add(trans);
+				}
+			}
+		}
+		else
+		{
+			throw new AccountNotFoundException("Account with Number : "+accountNumber+" is not present");
+		}
+		if(updatedTransList == null)
+		{
+			return null;
+		}
+		return updatedTransList;
+	}
+
+}

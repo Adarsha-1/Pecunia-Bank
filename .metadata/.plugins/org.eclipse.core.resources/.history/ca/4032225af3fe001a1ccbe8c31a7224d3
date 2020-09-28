@@ -1,0 +1,9 @@
+package com.capgemini.pecunia.atmservice.dao;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+
+public interface AtmRepositry extends JpaRepository<AtmRegistry,Long>{
+	
+}

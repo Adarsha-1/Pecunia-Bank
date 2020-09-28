@@ -1,0 +1,38 @@
+package com.capgemini.pecunia.atmservice.dto;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
+public class AtmRegistry {
+	@Id
+	private long atmNumber;
+	private long accountNumber;
+	private String status;
+	public AtmRegistry() {}
+	public AtmRegistry(long atmNumber, long accountNumber, String status) {
+		super();
+		this.atmNumber = atmNumber;
+		this.accountNumber = accountNumber;
+		this.status = status;
+	}
+	public long getAtmNumber() {
+		return atmNumber;
+	}
+	public void setAtmNumber(long atmNumber) {
+		this.atmNumber = atmNumber;
+	}
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+}

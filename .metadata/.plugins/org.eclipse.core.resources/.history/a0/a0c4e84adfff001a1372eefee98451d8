@@ -1,0 +1,13 @@
+package com.capgemini.pecunia.atmservice.exception;
+
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import com.capgemini.pecunia.atmservice.dto.CustomError;
+
+@ControllerAdvice
+public class AtmServiceExceptionAdvice {
+	
+	public ResponseEntity<CustomError> mapException(AtmCardNotFoundException ex)
+	{
+		
+	}
+}

@@ -1,0 +1,12 @@
+package com.capgemini.pecunia.passbookservice.service;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import com.capgemini.pecunia.passbookservice.dto.Transaction;
+
+public interface PassBookService {
+
+	public List<Transaction> updatePassbook(long accountNumber);
+	public List<Transaction> accountSummary(long accountNumber,LocalDate fromDate,LocalDate toDate);
+}

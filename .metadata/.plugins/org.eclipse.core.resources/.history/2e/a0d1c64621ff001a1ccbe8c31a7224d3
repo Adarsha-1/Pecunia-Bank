@@ -1,0 +1,59 @@
+package com.capgemini.pecunia.passbookservice.service;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+import java.time.LocalDate;
+
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.capgemini.pecunia.passbookservice.dao.AccountRepository;
+import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
+import com.capgemini.pecunia.passbookservice.dao.TransactionRepository;
+import com.capgemini.pecunia.passbookservice.dto.Account;
+import com.capgemini.pecunia.passbookservice.dto.Transaction;
+
+@RunWith(SpringRunner.class)
+@SpringBootTest
+class PassBookServiceTest {
+
+	@Autowired
+	private PassBookServiceImpl passBookService;
+	
+	@Autowired
+	PassBookRepository passBookRepo;
+	
+	@Autowired
+	AccountRepository accountRepo;
+	
+	@Autowired
+	TransactionRepository transRepo;
+	
+	@Test
+	void test() {
+		fail("Not yet implemented");
+	}
+	
+	@Test
+	public void updatePassBookTest()
+	{
+		Account acc=new Account();
+		acc.setAccountName('Adarsha');
+		acc.setAmount(6500.00);
+		acc.setAccountNo(23456);
+		accountRepo.save(acc);
+		Transaction trans=new Transaction();
+		trans.setAccountBalance(23456.00);
+		trans.setAccountNo(23456);
+		trans.setTransactionAmount(5000.00);
+		trans.setTransactionDate(LocalDate.of(2020, 08, 25));
+		trans.setTransactionStatus('DONE');
+		trans.setTransactionType('DEBIT');
+		transRepo.save(trans);
+		
+	}
+
+}

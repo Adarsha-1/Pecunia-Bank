@@ -1,0 +1,15 @@
+package com.capgemini.pecunia.atmservice.dto;
+
+public class CustomError {
+	
+	private int errorCode;
+	private String errorMessage;
+	
+	public CustomError() {}
+	public CustomError(int errorCode, String errorMessage) {
+		super();
+		this.errorCode = errorCode;
+		this.errorMessage = errorMessage;
+	}
+	
+}

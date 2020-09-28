@@ -1,0 +1,20 @@
+package com.capgemini.pecunia.atmservice.exception;
+
+public class AtmServiceExceptionAdvice extends Exception{
+
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public AtmServiceExceptionAdvice(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public AtmServiceExceptionAdvice(String message) {
+		super(message);
+	}
+	
+	
+}
