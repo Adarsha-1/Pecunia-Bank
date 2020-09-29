@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.capgemini.pecunia.passbookservice.dto.Transaction;
 import com.capgemini.pecunia.passbookservice.dto.Transcation;
 import com.capgemini.pecunia.passbookservice.service.PassBookServiceImpl;
 
@@ -30,7 +29,8 @@ public class PassBookController {
 	@GetMapping("/req/{number}")
 	public List<Transcation> updatePassBook(@ApiParam(value="account number is in long format")@PathVariable("number") long accountNumber)
 	{
-		log.info("updating passbook for the account number:"+accountNumber);
+		String info="updating passbook for the account number:"+accountNumber;
+		log.info(info);
 		return passBookService.updatePassbook(accountNumber);
 	}	
 	
@@ -38,7 +38,8 @@ public class PassBookController {
 	@GetMapping("/summ/{number}/{fromDate}/{toDate}")
 	public List<Transcation> accountSumm(@ApiParam(value="account number is in long format")@PathVariable("number") long accountNumber, @PathVariable("fromDate") String fromDate,@PathVariable("toDate") String toDate)
 	{
-		log.info("Getting transactions b/w "+LocalDate.parse(fromDate)+" to "+LocalDate.parse(toDate)+" for account number: "+accountNumber);
+		String info="Getting transactions b/w "+LocalDate.parse(fromDate)+" to "+LocalDate.parse(toDate)+" for account number: "+accountNumber;
+		log.info(info);
 		return passBookService.accountSummary(accountNumber, LocalDate.parse(fromDate), LocalDate.parse(toDate));
 	}
 }

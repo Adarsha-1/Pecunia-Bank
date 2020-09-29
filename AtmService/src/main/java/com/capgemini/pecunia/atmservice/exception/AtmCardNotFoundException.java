@@ -11,7 +11,6 @@ public class AtmCardNotFoundException extends RuntimeException{
 
 	public AtmCardNotFoundException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 	
 

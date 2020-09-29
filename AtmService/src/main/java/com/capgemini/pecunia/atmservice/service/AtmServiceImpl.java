@@ -3,10 +3,6 @@ package com.capgemini.pecunia.atmservice.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.TypedQuery;
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -44,8 +40,7 @@ public class AtmServiceImpl implements AtmService {
 
 	@Override
 	public AtmRegistry requestAtmCard(long accountNumber) {
-		// TODO Auto-generated method stub
-		List<AtmRegistry> allList=new ArrayList<AtmRegistry>();
+		List<AtmRegistry> allList=new ArrayList<>();
 		atmRepositry.findAll().forEach(atm->allList.add(atm));
 		boolean accountPresent=restTemplate.getForObject("http://account-service/account/valid/"+accountNumber, boolean.class);
 		AtmRegistry newAtm=new AtmRegistry();

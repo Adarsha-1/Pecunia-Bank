@@ -12,11 +12,10 @@ public class AccountService {
 	@Autowired
 	private RestTemplate restTemplate;
 	
-	//@HystrixCommand(fallbackMethod="getFallBackAccountPresent")
+	@HystrixCommand(fallbackMethod="getFallBackAccountPresent")
 	public boolean accountNumberExists(long accountNumber)
 	{
-		boolean accountPresent=restTemplate.getForObject("http://account-service/account/valid/"+accountNumber, boolean.class);
-		return accountPresent;
+		return restTemplate.getForObject("http://account-service/account/valid/"+accountNumber, boolean.class);
 	}
 	
 	public boolean getFallBackAccountPresent(long accountNumber)

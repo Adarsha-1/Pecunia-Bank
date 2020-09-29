@@ -9,7 +9,6 @@
     <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.dto.ErrorMsg"/>
     <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ControllerAdvice"/>
     <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException"/>
-    <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.exception.NoTransactionsException"/>
     <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.exception.ToDateException"/>
     <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.exception.ToDateAfterCurrentDateException"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.netflix.eureka.server.EnableEurekaServer"/>
@@ -18,8 +17,6 @@
     <fullyQualifiedTypeName name="org.springframework.context.annotation.Bean"/>
     <fullyQualifiedTypeName name="org.springframework.cloud.client.loadbalancer.LoadBalanced"/>
     <fullyQualifiedTypeName name="org.springframework.boot.test.mock.mockito.MockBean"/>
-    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
-    <fullyQualifiedTypeName name="java.util.stream.Stream"/>
     <fullyQualifiedTypeName name="org.springframework.boot.test.web.client.TestRestTemplate"/>
     <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
@@ -60,4 +57,7 @@
     <fullyQualifiedTypeName name="javax.validation.Valid"/>
     <fullyQualifiedTypeName name="com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand"/>
     <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
+    <fullyQualifiedTypeName name="java.util.stream.Stream"/>
+    <fullyQualifiedTypeName name="java.util.stream.Collectors"/>
+    <fullyQualifiedTypeName name="com.capgemini.pecunia.passbookservice.exception.NoTransactionsException"/>
 </qualifiedTypeNameHistroy>

@@ -1,13 +1,41 @@
 package com.capgemini.pecunia.passbookservice;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.util.List;
 
+import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
+import com.capgemini.pecunia.passbookservice.dto.Transcation;
+import com.capgemini.pecunia.passbookservice.service.PassBookServiceImpl;
+
+@RunWith(SpringRunner.class)
 @SpringBootTest
 class PassBookServiceApplicationTests {
 
+	@Autowired
+	private PassBookServiceImpl passBookService;
+	
+	@MockBean
+	private PassBookRepository passBookRepo;
+	
+	/*
+	 * @Autowired PassBookRepository passBookRepo;
+	 * 
+	 * @Autowired AccountRepository accountRepo;
+	 * 
+	 * @Autowired TransactionRepository transRepo;
+	 */
 	@Test
-	void contextLoads() {
+	void updatePassBookTest()
+	{
+		List<Transcation> transList=passBookService.updatePassbook(535671);
+		assertEquals(4,transList.size());
 	}
 
 }

@@ -1,9 +1,5 @@
 package com.capgemini.pecunia.passbookservice.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
 
 
 public class Account {

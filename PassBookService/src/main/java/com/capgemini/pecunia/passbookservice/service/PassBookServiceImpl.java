@@ -3,18 +3,13 @@ package com.capgemini.pecunia.passbookservice.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 
 import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
-import com.capgemini.pecunia.passbookservice.dao.TransactionRepository;
-import com.capgemini.pecunia.passbookservice.dto.Account;
 import com.capgemini.pecunia.passbookservice.dto.PassBook;
-import com.capgemini.pecunia.passbookservice.dto.Transaction;
 import com.capgemini.pecunia.passbookservice.dto.Transcation;
 import com.capgemini.pecunia.passbookservice.dto.UserTransactions;
 import com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException;
@@ -29,12 +24,6 @@ public class PassBookServiceImpl implements PassBookService{
 	PassBookRepository passBookrepo;
 	
 	@Autowired
-	TransactionRepository transRepo;
-	
-	@Autowired
-	private RestTemplate restTemplate;
-	
-	@Autowired
 	private TransService transService;
 	
 	@Autowired
@@ -43,23 +32,16 @@ public class PassBookServiceImpl implements PassBookService{
 	
 	@Override
 	public List<Transcation> updatePassbook(long accountNumber) {
-		// TODO Auto-generated method stub
-		System.out.println("entered");
 		boolean accountPre=accService.accountNumberExists(accountNumber);
-		List<Transcation> updatedTransList=new ArrayList<Transcation>();
+		List<Transcation> updatedTransList=new ArrayList<>();
 		PassBook updatePassBook=new PassBook();
 		if(accountPre)
 		{
-			System.out.println("entered inner loop");
-			//List<Transaction> transactionList=transRepo.findByAccountNo(accountNumber);
 			
 			UserTransactions transactions=transService.transactionList(accountNumber);
-			List<Transcation> transactionList=transactions.getUserTransaction();;
+			List<Transcation> transactionList=transService.transactionList(accountNumber).getUserTransaction();
 			
-			
-			System.out.println("entered transaction"+transactionList.size());
 			PassBook passbook=passBookrepo.findByAccountNumber(accountNumber);
-			System.out.println("entered pass"+passbook);
 			if(passbook!=null)
 			{
 				LocalDate updateddate=passbook.getUpdatedDate();
@@ -71,27 +53,22 @@ public class PassBookServiceImpl implements PassBookService{
 					}
 				}
 				updatePassBook=passbook;
-				updatePassBook.setUpdatedDate(LocalDate.now());
-				passBookrepo.save(updatePassBook);
 			}
 			else
 			{
-				for(Transcation trans:transactionList)
-				{
-					updatedTransList.add(trans);
-				}
+				transactions.getUserTransaction().forEach(trans->updatedTransList.add(trans));
 				updatePassBook.setAccountNumber(accountNumber);
-				updatePassBook.setUpdatedDate(LocalDate.now());
-				passBookrepo.save(updatePassBook);
 			}
-			System.out.println("If loop: "+updatedTransList.size());
+
+			updatePassBook.setUpdatedDate(LocalDate.now());
+			passBookrepo.save(updatePassBook);
 			
 		}
 		else
 		{
 			throw new AccountNotFoundException("Account with Number : "+accountNumber+" is not present");
 		}
-		if(updatedTransList.size()==0)
+		if(updatedTransList.isEmpty())
 		{
 			throw new NoTransactionsException("No recent transaction done after last updation on account number: "+accountNumber);
 		}
@@ -100,9 +77,8 @@ public class PassBookServiceImpl implements PassBookService{
 
 	@Override
 	public List<Transcation> accountSummary(long accountNumber, LocalDate fromDate, LocalDate toDate) {
-		// TODO Auto-generated method stub
 		boolean accountPre=accService.accountNumberExists(accountNumber);
-		List<Transcation> updatedTransList=new ArrayList<Transcation>();
+		List<Transcation> updatedTransList=new ArrayList<>();
 		if(accountPre)
 		{
 			UserTransactions transactions=transService.transactionList(accountNumber);
@@ -117,11 +93,7 @@ public class PassBookServiceImpl implements PassBookService{
 			}
 			for(Transcation trans:transactionList)
 			{
-				if((trans.getTranscationDate()).isAfter(fromDate) && trans.getTranscationDate().isBefore(toDate))
-				{
-					updatedTransList.add(trans);
-				}
-				if(trans.getTranscationDate().compareTo(fromDate) == 0 || trans.getTranscationDate().compareTo(toDate) == 0)
+				if((trans.getTranscationDate()).isAfter(fromDate) && trans.getTranscationDate().isBefore(toDate) || trans.getTranscationDate().compareTo(fromDate) == 0 || trans.getTranscationDate().compareTo(toDate) == 0)
 				{
 					updatedTransList.add(trans);
 				}
@@ -131,7 +103,7 @@ public class PassBookServiceImpl implements PassBookService{
 		{
 			throw new AccountNotFoundException("Account with Number : "+accountNumber+" is not present");
 		}
-		if(updatedTransList.size() == 0)
+		if(updatedTransList.isEmpty())
 		{
 			throw new NoTransactionsException("No Transactions present between "+fromDate+" to "+toDate);
 		}

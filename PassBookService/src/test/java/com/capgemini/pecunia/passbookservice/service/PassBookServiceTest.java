@@ -14,10 +14,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 
 import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
-import com.capgemini.pecunia.passbookservice.dao.TransactionRepository;
-import com.capgemini.pecunia.passbookservice.dto.Account;
-import com.capgemini.pecunia.passbookservice.dto.PassBook;
-import com.capgemini.pecunia.passbookservice.dto.Transaction;
 import com.capgemini.pecunia.passbookservice.dto.Transcation;
 import com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException;
 import com.capgemini.pecunia.passbookservice.exception.NoTransactionsException;
@@ -42,14 +38,14 @@ class PassBookServiceTest {
 	 * @Autowired TransactionRepository transRepo;
 	 */
 	@Test
-	public void updatePassBookTest()
+	void updatePassBookTest()
 	{
 		List<Transcation> transList=passBookService.updatePassbook(535671);
-		assertEquals(transList.size(),4);
+		assertEquals(4,transList.size());
 	}
 	
 	@Test
-	public void updatePassBookNotFoundTest()
+	void updatePassBookNotFoundTest()
 	{
 		/*
 		 * Account acc=new Account(); acc.setAccountName("adarsha");
@@ -87,7 +83,7 @@ class PassBookServiceTest {
 	//}*/
 	
 	@Test
-	public void accountSummaryTest()
+	void accountSummaryTest()
 	{
 		/*
 		 * Account acc=new Account(); acc.setAccountName("adarsha");
@@ -106,26 +102,56 @@ class PassBookServiceTest {
 		 * passBookRepo.save(pass);
 		 */
 		List<Transcation> transList=passBookService.accountSummary(535671, LocalDate.of(2019, 12, 12), LocalDate.of(2020, 07, 05));
-		assertEquals(transList.size(),2);
+		assertEquals(2,transList.size());
 		
 	}
 	
 	@Test
-	public void accountSummaryToDateTest()
+	void accountSummaryToDateTest()
 	{
-		assertThrows(ToDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2019, 02, 12)));
+		try
+		{
+			passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2019, 02, 12));
+		}
+		catch(ToDateException e)
+		{
+			String actualMsg=e.getMessage();
+			String expectedMsg="To Date i.e: "+LocalDate.of(2019, 02, 12)+" should be after from date ";
+			assertEquals(expectedMsg,actualMsg);
+		}
+		//assertThrows(ToDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2019, 02, 12)));
 	}
 	
 	@Test
-	public void accountSummaryToDateCurrentTest()
+	void accountSummaryToDateCurrentTest()
 	{
-		assertThrows(ToDateAfterCurrentDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2021, 02, 12)));
+		try
+		{
+			passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2021, 02, 12));
+		}
+		catch(ToDateAfterCurrentDateException e)
+		{
+			String actualMsg=e.getMessage();
+			String expectedMsg="ToDate i.e: "+LocalDate.of(2021, 02, 12)+"should not be after current date";
+			assertEquals(expectedMsg,actualMsg);
+		}
+		//assertThrows(ToDateAfterCurrentDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2021, 02, 12)));
 	}
 	
 	@Test
-	public void accountSummaryNoTransactionsTest()
+	void accountSummaryNoTransactionsTest()
 	{
-		assertThrows(ToDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,11,12), LocalDate.of(2019, 02, 12)));
+		try
+		{
+			passBookService.accountSummary(552632, LocalDate.of(2019,11,12), LocalDate.of(2019, 02, 12));
+		}
+		catch(NoTransactionsException e)
+		{
+			String actualMsg=e.getMessage();
+			String expectedMsg="No Transactions present between "+LocalDate.of(2019,11,12)+" to "+LocalDate.of(2019, 02, 12);
+			assertEquals(expectedMsg,actualMsg);
+		}
+		//assertThrows(ToDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,11,12), LocalDate.of(2019, 02, 12)));
 	}
 
 }

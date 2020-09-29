@@ -9,7 +9,6 @@ public class AccountIdException extends RuntimeException{
 
 	public AccountIdException(String message) {
 		super(message);
-		// TODO Auto-generated constructor stub
 	}
 	
 

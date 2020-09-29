@@ -1,0 +1,24 @@
+package com.capgemini.pecunia.atmservice;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+
+@SpringBootTest
+class AtmServiceApplicationTests {
+
+	@Test
+	void atmCardBlocktest() {
+		/*
+		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(525263);
+		 * atmCard.setAtmNumber(123456); atmCard.setStatus("In-use");
+		 * repo.save(atmCard);
+		 */
+		AtmRegistry find=atmService.blockAtmCard(520000000000L);
+		assertEquals(find.getStatus(),"BLOCK");
+		
+	}
+}

@@ -2,13 +2,10 @@ package com.capgemini.pecunia.atmservice.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.capgemini.pecunia.atmservice.dto.CustomError;
-import com.capgemini.pecunia.atmservice.exception.AtmCardNotFoundException;
 
 @RestControllerAdvice
 public class AtmServiceExceptionAdvice {
@@ -17,7 +14,7 @@ public class AtmServiceExceptionAdvice {
 	public ResponseEntity<CustomError> mapException(AtmCardNotFoundException ex)
 	{
 		CustomError error=new CustomError(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
-		return new ResponseEntity<CustomError>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
@@ -25,7 +22,7 @@ public class AtmServiceExceptionAdvice {
 	public ResponseEntity<CustomError> mapAccountException(AccountNotFoundException ex)
 	{
 		CustomError error=new CustomError(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
-		return new ResponseEntity<CustomError>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
@@ -33,7 +30,7 @@ public class AtmServiceExceptionAdvice {
 	public ResponseEntity<CustomError> mapCardException(CardAlreadyExistsException ex)
 	{
 		CustomError error=new CustomError(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
-		return new ResponseEntity<CustomError>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 	
@@ -41,7 +38,7 @@ public class AtmServiceExceptionAdvice {
 	public ResponseEntity<CustomError> mapAccountIdException(AccountIdException ex)
 	{
 		CustomError error=new CustomError(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
-		return new ResponseEntity<CustomError>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
 }

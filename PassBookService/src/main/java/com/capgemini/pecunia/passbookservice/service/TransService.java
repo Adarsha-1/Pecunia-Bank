@@ -2,7 +2,6 @@ package com.capgemini.pecunia.passbookservice.service;
 
 import java.time.LocalDate;
 import java.util.Arrays;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,15 +20,12 @@ public class TransService {
 	@HystrixCommand(fallbackMethod="getFallBackTransactionList")
 	public UserTransactions transactionList(long accountNumber)
 	{
-		UserTransactions transactions=restTemplate.getForObject("http://transaction-service/transactionList/"+accountNumber, UserTransactions.class);
-		return transactions;
+		return restTemplate.getForObject("http://transaction-service/transactionList/"+accountNumber, UserTransactions.class);
 	}
 	
 	public UserTransactions getFallBackTransactionList(long accountNumber)
 	{
-		List<Transcation> list=Arrays.asList(new Transcation(0L,0L," ",0.0,0.0,LocalDate.now(),"Transactions not found"));
-		UserTransactions trans=new UserTransactions(list);
-		return trans;
+		return new UserTransactions(Arrays.asList(new Transcation(0L,0L," ",0.0,0.0,LocalDate.now(),"Transactions not found")));
 	}
 	
 }

@@ -41,8 +41,7 @@ public class AtmServiceApplication {
 	}
 	private ApiInfo myApiInfo()
 	{
-		// TODO Auto-generated method stub
-		ApiInfo apiInfo=new ApiInfo(
+		return new ApiInfo(
 				"SPRING WITH SWAGGER API", 
 				"API CREATION", 
 				"1.0", 
@@ -51,7 +50,6 @@ public class AtmServiceApplication {
 				"API licence",
 				"/api",
 				Collections.emptyList());
-		return apiInfo;
 	}
 	
 	public static void main(String[] args) {

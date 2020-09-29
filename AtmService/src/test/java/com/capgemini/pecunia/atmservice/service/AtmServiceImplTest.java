@@ -6,10 +6,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.capgemini.pecunia.atmservice.dao.AtmRepositry;
 import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
 import com.capgemini.pecunia.atmservice.exception.AccountNotFoundException;
 import com.capgemini.pecunia.atmservice.exception.AtmCardNotFoundException;
@@ -27,19 +25,19 @@ class AtmServiceImplTest {
 	 */
 	
 	@Test
-	public void atmCardBlocktest() {
+	void atmCardBlocktest() {
 		/*
 		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(525263);
 		 * atmCard.setAtmNumber(123456); atmCard.setStatus("In-use");
 		 * repo.save(atmCard);
 		 */
 		AtmRegistry find=atmService.blockAtmCard(520000000000L);
-		assertEquals(find.getStatus(),"BLOCK");
+		assertEquals("BLOCK",find.getStatus());
 		
 	}
 	
 	@Test
-	public void atmCardBlockNotFoundTest()
+	void atmCardBlockNotFoundTest()
 	{
 		/*
 		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(525263);
@@ -51,18 +49,18 @@ class AtmServiceImplTest {
 	}
 	
 	@Test
-	public void atmCardRequestTest()
+	void atmCardRequestTest()
 	{
 		/*
 		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(525261);
 		 * atmCard.setAtmNumber(123457); atmCard.setStatus("BLOCK"); repo.save(atmCard);
 		 */
 		AtmRegistry find=atmService.requestAtmCard(525263);
-		assertEquals(find.getStatus(),"Dispatched");
+		assertEquals("Dispatched",find.getStatus());
 	}
 	
 	@Test
-	public void atmCardRequestAlreadyExistTest()
+	 void atmCardRequestAlreadyExistTest()
 	{
 		/*
 		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(525273);
@@ -74,7 +72,7 @@ class AtmServiceImplTest {
 	}
 	
 	@Test
-	public void atmCardRequestAccountDoesntExistTest()
+	void atmCardRequestAccountDoesntExistTest()
 	{
 		/*
 		 * AtmRegistry atmCard=new AtmRegistry(); atmCard.setAccountNumber(595263);
