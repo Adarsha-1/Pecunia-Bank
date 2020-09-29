@@ -15,6 +15,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
 import com.capgemini.pecunia.passbookservice.dto.Transcation;
+import com.capgemini.pecunia.passbookservice.exception.AccountNoLengthException;
 import com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException;
 import com.capgemini.pecunia.passbookservice.exception.NoTransactionsException;
 import com.capgemini.pecunia.passbookservice.exception.ToDateAfterCurrentDateException;
@@ -40,7 +41,7 @@ class PassBookServiceTest {
 	@Test
 	void updatePassBookTest()
 	{
-		List<Transcation> transList=passBookService.updatePassbook(535671);
+		List<Transcation> transList=passBookService.updatePassbook(2000000061);
 		assertEquals(4,transList.size());
 	}
 	
@@ -59,8 +60,23 @@ class PassBookServiceTest {
 		 * 12)); passBookRepo.save(pass);
 		 */
 		//List<Transaction> transList=passBookService.updatePassbook(234561);
-		assertThrows(AccountNotFoundException.class,()->passBookService.updatePassbook(234561));
+		assertThrows(AccountNotFoundException.class,()->passBookService.updatePassbook(2000000091));
 		
+	}
+	
+	@Test
+	void updatePassBookAccountLengthTest()
+	{
+		try
+		{
+			passBookService.updatePassbook(1234589);
+		}
+		catch(AccountNoLengthException e)
+		{
+			String expectedMsg="Account number should have 10 digits";
+			String actualMsg=e.getMessage();
+			assertEquals(expectedMsg,actualMsg);
+		}
 	}
 	
 	//@Test
@@ -82,6 +98,7 @@ class PassBookServiceTest {
 		
 	//}*/
 	
+	
 	@Test
 	void accountSummaryTest()
 	{
@@ -101,9 +118,24 @@ class PassBookServiceTest {
 		 * pass.setAccountNumber(2456); pass.setUpdatedDate(LocalDate.of(2020, 9, 12));
 		 * passBookRepo.save(pass);
 		 */
-		List<Transcation> transList=passBookService.accountSummary(535671, LocalDate.of(2019, 12, 12), LocalDate.of(2020, 07, 05));
+		List<Transcation> transList=passBookService.accountSummary(2000000001, LocalDate.of(2019, 12, 12), LocalDate.of(2020, 07, 05));
 		assertEquals(2,transList.size());
 		
+	}
+	
+	@Test
+	void accountSummaryAccountLengthTest()
+	{
+		try
+		{
+			passBookService.accountSummary(1234567, LocalDate.of(2020, 02, 12), LocalDate.of(2020, 05, 15));
+		}
+		catch(AccountNoLengthException e)
+		{
+			String expectedMsg="Account number should have 10 digits";
+			String actualMsg=e.getMessage();
+			assertEquals(expectedMsg,actualMsg);
+		}
 	}
 	
 	@Test
@@ -111,7 +143,7 @@ class PassBookServiceTest {
 	{
 		try
 		{
-			passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2019, 02, 12));
+			passBookService.accountSummary(2000000001, LocalDate.of(2019,12,12), LocalDate.of(2019, 02, 12));
 		}
 		catch(ToDateException e)
 		{
@@ -127,7 +159,7 @@ class PassBookServiceTest {
 	{
 		try
 		{
-			passBookService.accountSummary(552632, LocalDate.of(2019,12,12), LocalDate.of(2021, 02, 12));
+			passBookService.accountSummary(2000000021, LocalDate.of(2019,12,12), LocalDate.of(2021, 02, 12));
 		}
 		catch(ToDateAfterCurrentDateException e)
 		{
@@ -143,12 +175,12 @@ class PassBookServiceTest {
 	{
 		try
 		{
-			passBookService.accountSummary(552632, LocalDate.of(2019,11,12), LocalDate.of(2019, 02, 12));
+			passBookService.accountSummary(2000000021, LocalDate.of(2019,10,12), LocalDate.of(2019,11, 02));
 		}
 		catch(NoTransactionsException e)
 		{
 			String actualMsg=e.getMessage();
-			String expectedMsg="No Transactions present between "+LocalDate.of(2019,11,12)+" to "+LocalDate.of(2019, 02, 12);
+			String expectedMsg="No Transactions present between "+LocalDate.of(2019,10,12)+" to "+LocalDate.of(2019, 11, 02);
 			assertEquals(expectedMsg,actualMsg);
 		}
 		//assertThrows(ToDateException.class,()->passBookService.accountSummary(552632, LocalDate.of(2019,11,12), LocalDate.of(2019, 02, 12)));

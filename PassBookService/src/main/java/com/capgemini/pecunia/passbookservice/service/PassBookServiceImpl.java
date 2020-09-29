@@ -7,11 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import com.capgemini.pecunia.passbookservice.dao.PassBookRepository;
 import com.capgemini.pecunia.passbookservice.dto.PassBook;
 import com.capgemini.pecunia.passbookservice.dto.Transcation;
 import com.capgemini.pecunia.passbookservice.dto.UserTransactions;
+import com.capgemini.pecunia.passbookservice.exception.AccountNoLengthException;
 import com.capgemini.pecunia.passbookservice.exception.AccountNotFoundException;
 import com.capgemini.pecunia.passbookservice.exception.NoTransactionsException;
 import com.capgemini.pecunia.passbookservice.exception.ToDateAfterCurrentDateException;
@@ -32,6 +32,10 @@ public class PassBookServiceImpl implements PassBookService{
 	
 	@Override
 	public List<Transcation> updatePassbook(long accountNumber) {
+		if(accountNumber<=1999999999L || accountNumber>9999999999L)
+		{
+			throw new AccountNoLengthException("Account number should have 10 digits");
+		}
 		boolean accountPre=accService.accountNumberExists(accountNumber);
 		List<Transcation> updatedTransList=new ArrayList<>();
 		PassBook updatePassBook=new PassBook();
@@ -77,6 +81,10 @@ public class PassBookServiceImpl implements PassBookService{
 
 	@Override
 	public List<Transcation> accountSummary(long accountNumber, LocalDate fromDate, LocalDate toDate) {
+		if(accountNumber<=1999999999L || accountNumber>9999999999L)
+		{
+			throw new AccountNoLengthException("Account number should have 10 digits");
+		}
 		boolean accountPre=accService.accountNumberExists(accountNumber);
 		List<Transcation> updatedTransList=new ArrayList<>();
 		if(accountPre)

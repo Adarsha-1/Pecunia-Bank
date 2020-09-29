@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
-import com.capgemini.pecunia.atmservice.service.AtmServiceImpl;
+import com.capgemini.pecunia.atmservice.service.AtmService;
 
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiParam;
 public class AtmServiceController {
 	
 	@Autowired
-	AtmServiceImpl atmService;
+	AtmService atmService;
 	
 	Logger log=LoggerFactory.getLogger(AtmServiceController.class);
 	

@@ -50,4 +50,12 @@ public class PassBookServiceExceptionAdvice {
 		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	
+	@ExceptionHandler(AccountNoLengthException.class)
+	public ResponseEntity<CustomError> mapAccountNoLengthException(AccountNoLengthException ex)
+	{
+		CustomError error=new CustomError(HttpStatus.INTERNAL_SERVER_ERROR.value(),ex.getMessage());
+		return new ResponseEntity<>(error,HttpStatus.INTERNAL_SERVER_ERROR);
+		
+	}
 }

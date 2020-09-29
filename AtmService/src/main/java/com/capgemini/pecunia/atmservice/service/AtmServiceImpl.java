@@ -9,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import com.capgemini.pecunia.atmservice.dao.AtmRepositry;
 import com.capgemini.pecunia.atmservice.dto.AtmRegistry;
+import com.capgemini.pecunia.atmservice.exception.AccountNoLengthException;
 import com.capgemini.pecunia.atmservice.exception.AccountNotFoundException;
 import com.capgemini.pecunia.atmservice.exception.AtmCardNotFoundException;
 import com.capgemini.pecunia.atmservice.exception.CardAlreadyExistsException;
@@ -25,6 +26,10 @@ public class AtmServiceImpl implements AtmService {
 	@Override
 	public AtmRegistry blockAtmCard(long atmNumber) {
 		AtmRegistry atm=null;
+		if(atmNumber<=519999999999L || atmNumber>999999999999L)
+		{
+			throw new AccountNoLengthException("ATM number should have 12 digits");
+		}
 		try
 		{
 			atm=atmRepositry.findByAtmNumber(atmNumber);
@@ -40,6 +45,10 @@ public class AtmServiceImpl implements AtmService {
 
 	@Override
 	public AtmRegistry requestAtmCard(long accountNumber) {
+		if(accountNumber<=1999999999L || accountNumber>9999999999L)
+		{
+			throw new AccountNoLengthException("Account number should have 10 digits");
+		}
 		List<AtmRegistry> allList=new ArrayList<>();
 		atmRepositry.findAll().forEach(atm->allList.add(atm));
 		boolean accountPresent=restTemplate.getForObject("http://account-service/account/valid/"+accountNumber, boolean.class);

@@ -1,4 +1,7 @@
 
+ˆ
+java:S3776S"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(·ûÁÉ8Æ˜¸ÒÍ.H»RCRITICALZ
+CODE_SMELL
 d
-java:S1612;",Replace this lambda with a method reference.(›û–òúÿÿÿÿ8¦œ«Í.HáRMINORZ
+java:S1612?",Replace this lambda with a method reference.(›û–òúÿÿÿÿ8¦œ«Í.HºRMINORZ
 CODE_SMELL

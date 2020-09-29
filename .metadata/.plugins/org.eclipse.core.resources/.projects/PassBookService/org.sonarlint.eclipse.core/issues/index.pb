@@ -49,3 +49,5 @@ Tsrc/test/java/com/capgemini/pecunia/passbookservice/service/PassBookServiceTest
 Xsrc/test/java/com/capgemini/pecunia/passbookservice/PassBookServiceApplicationTests.java,a\f\afe572c5c9cbe155a7b4df9569f094b8218d35a1
 „
 Tsrc/main/java/com/capgemini/pecunia/passbookservice/service/PassBookServiceImpl.java,5\9\591b33ce729ad376cbbf53601fbfa5c4618ca80f
+‹
+[src/main/java/com/capgemini/pecunia/passbookservice/exception/AccountNoLengthException.java,f\5\f5164afd919948a41df9e0f34034b4cfdcf4dca2
